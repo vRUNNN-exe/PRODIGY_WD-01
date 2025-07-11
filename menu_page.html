@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee House Menu</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f3ef;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #4b2e19;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.3s, box-shadow 0.3s;
+            z-index: 1000;
+        }
+        .navbar.scrolled {
+            background: #2d170a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 2rem;
+        }
+        .navbar li {
+            display: inline-block;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #fffbe7;
+            font-size: 1.1rem;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar a:hover, .navbar a:focus {
+            background: #d9a066;
+            color: #4b2e19;
+        }
+        .content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .featured {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: #fffbe7;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(75,46,25,0.08);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .featured img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(75,46,25,0.10);
+        }
+        .featured-content h2 {
+            margin-top: 0;
+            color: #4b2e19;
+        }
+        .cta-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: #d9a066;
+            color: #4b2e19;
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+        .cta-btn:hover {
+            background: #b87b2c;
+            color: #fffbe7;
+        }
+        .menu-section {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(75,46,25,0.07);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .menu-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 0;
+            list-style: none;
+        }
+        .menu-item {
+            background: #f7f3ef;
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 1px 6px rgba(75,46,25,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .menu-item-title {
+            font-weight: bold;
+            color: #4b2e19;
+            font-size: 1.1rem;
+        }
+        .menu-item-desc {
+            color: #7a5c3a;
+            font-size: 0.98rem;
+        }
+        .menu-item-price {
+            color: #d9a066;
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-top: 0.2rem;
+        }
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #d9a066;
+            margin: 2.5rem 0 2rem 0;
+        }
+        .testimonials {
+            background: #fffbe7;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(75,46,25,0.07);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .testimonials h2 {
+            color: #4b2e19;
+        }
+        .testimonial-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .testimonial {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 1px 6px rgba(75,46,25,0.06);
+            padding: 1.2rem 1.5rem;
+            flex: 1 1 250px;
+            min-width: 220px;
+        }
+        .testimonial p {
+            color: #4b2e19;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .testimonial .author {
+            color: #7a5c3a;
+            font-size: 0.97rem;
+            font-weight: bold;
+        }
+        h1, h2 {
+            color: #4b2e19;
+        }
+        .center-section {
+            text-align: center;
+        }
+        .contact-section {
+            text-align: center;
+            margin-top: 2rem;
+            background: #fffbe7;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(75,46,25,0.06);
+            padding: 1.5rem 0.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 700px) {
+            .featured {
+                flex-direction: column;
+                text-align: center;
+            }
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+            .testimonial-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <section class="featured" id="home">
+            <img src="photo.jpg" alt="Coffee Cup">
+            <div class="featured-content">
+                <h2>Welcome to Coffee House</h2>
+                <p>Enjoy our finest selection of coffee, pastries, and cozy ambiance. Start your day with a perfect cup or relax with friends in our warm, inviting space.</p>
+                <a href="#menu" class="cta-btn">See Our Menu</a>
+            </div>
+        </section>
+        <hr class="section-divider">
+        <section class="menu-section" id="menu">
+            <h2>Our Menu</h2>
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <span class="menu-item-title">Espresso</span>
+                    <span class="menu-item-desc">Rich and bold, a classic Italian favorite.</span>
+                    <span class="menu-item-price">₹250</span>
+                </li>
+                <li class="menu-item">
+                    <span class="menu-item-title">Cappuccino</span>
+                    <span class="menu-item-desc">Espresso with steamed milk and a thick layer of foam.</span>
+                    <span class="menu-item-price">₹310</span>
+                </li>
+                <li class="menu-item">
+                    <span class="menu-item-title">Latte</span>
+                    <span class="menu-item-desc">Smooth espresso with creamy steamed milk.</span>
+                    <span class="menu-item-price">₹330</span>
+                </li>
+                <li class="menu-item">
+                    <span class="menu-item-title">Mocha</span>
+                    <span class="menu-item-desc">Espresso, chocolate, and steamed milk, topped with whipped cream.</span>
+                    <span class="menu-item-price">₹370</span>
+                </li>
+                <li class="menu-item">
+                    <span class="menu-item-title">Fresh Pastries</span>
+                    <span class="menu-item-desc">Baked daily: croissants, muffins, and more.</span>
+                    <span class="menu-item-price">₹200</span>
+                </li>
+                <li class="menu-item">
+                    <span class="menu-item-title">Iced Coffee</span>
+                    <span class="menu-item-desc">Chilled coffee, perfect for warm days.</span>
+                    <span class="menu-item-price">₹250</span>
+                </li>
+            </ul>
+        </section>
+        <hr class="section-divider">
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <ul class="testimonial-list">
+                <li class="testimonial">
+                    <p>"Best coffee in town! The atmosphere is so cozy and the staff are always friendly."</p>
+                    <span class="author">- Anonymous</span>
+                </li>
+                <li class="testimonial">
+                    <p>"I love their pastries and the cappuccino is always perfect. Highly recommend!"</p>
+                    <span class="author">- Anonymous</span>
+                </li>
+                <li class="testimonial">
+                    <p>"A great place to relax, work, or catch up with friends. The iced coffee is my favorite!"</p>
+                    <span class="author">- Anonymous</span>
+                </li>
+            </ul>
+        </section>
+        <hr class="section-divider">
+        <h2 id="about" class="center-section">About Us</h2>
+        <p class="center-section">We are passionate about serving the best coffee in town with a smile. Our beans are locally sourced and our pastries are baked fresh daily. Whether you're here for a quick pick-me-up or a long chat, our doors are always open for you.<br><br>
+        At Coffee House, we believe in creating a community space where everyone feels welcome. Our baristas are trained to craft each cup with care, and we regularly host events, workshops, and live music to bring people together. Sustainability is at the heart of what we do, from eco-friendly packaging to supporting local farmers. Come experience the aroma, taste, and warmth that make us more than just a coffee shop!</p>
+        <h2 id="contact" class="center-section">Contact</h2>
+        <div class="contact-section">
+            <p>Email: info@coffeehouse.com<br>Phone: +91 12345 67890</p>
+            <p>Mumbai, India <br><br>  Open: 11:00 AM - 10:00 PM (Mon-Sun) </p>
+           
+        </div>
+    </div>
+    <script>
+        // Change navbar style on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        // Smooth scroll for nav links (for browsers that don't support CSS scroll-behavior)
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: target.offsetTop - 65,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
